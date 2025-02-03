@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package databasemanagement;
+
+option go_package = "/proto";
+
+service DatabaseManagementService {
+    // Print the contents of a specific table
+    rpc ListTableNames(ListTablesRequest) returns (TableNamesResponse) {}
+
+    // Drop all tables in the database
+    rpc DropAllTables(DropAllTablesRequest) returns (OperationResponse) {}
+
+    // Create all tables in the database
+    rpc CreateAllTables(CreateAllTablesRequest) returns (OperationResponse) {}
+
+    // Print a table in the database
+    rpc PrintTable(StringCommandRequest) returns (TableContentResponse) {}
+
+    // Execute raw sql into the database
+    rpc ExecuteSql(StringCommandRequest) returns (OperationResponse) {}
+}
+
+//Requests
+message ListTablesRequest{}
+message DropAllTablesRequest{}
+message CreateAllTablesRequest{}
+message StringCommandRequest {
+  string command = 1;
+}
+
+// Responses
+message TableNamesResponse {
+  bool success = 1;
+  repeated string table_names = 2;
+}
+message OperationResponse {
+  bool success = 1;
+  string message = 2;
+}
+message TableContentResponse {
+  bool success = 1;
+  repeated string table_rows = 2;
+}

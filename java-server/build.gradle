@@ -1,0 +1,70 @@
+plugins {
+    id 'application' // Enables the ability to run your application
+    id 'java' // Java plugin for compiling and packaging
+    id 'com.google.protobuf' version '0.9.4' // Protobuf plugin for Gradle
+}
+
+repositories {
+    mavenCentral() // Include Maven Central repository to fetch dependencies
+    gradlePluginPortal() // Ensure the Gradle Plugin Portal is included for plugins
+}
+
+dependencies {
+    implementation 'com.mysql:mysql-connector-j:8.0.33' // MySQL JDBC connector
+    runtimeOnly 'io.grpc:grpc-netty-shaded:1.70.0'
+    implementation 'io.grpc:grpc-protobuf:1.70.0'
+    implementation 'io.grpc:grpc-stub:1.70.0'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
+    ////TEST
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+}
+
+protobuf {
+  protoc {
+    artifact = "com.google.protobuf:protoc:3.25.5"
+  }
+  plugins {
+    grpc {
+      artifact = 'io.grpc:protoc-gen-grpc-java:1.70.0'
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
+  }
+}
+
+// Configuring the sourceSets to include proto files from ../proto directory
+sourceSets {
+    main {
+        proto {
+            srcDir "../proto" // This points to your external proto directory
+        }
+    }
+}
+
+application {
+    mainClass = 'server.Main' // Replace with your fully qualified main class name
+}
+
+run {
+    args = [
+        'jdbc:mysql://localhost:3306/sms',
+        'root',
+        'root',
+    ]
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "failed", "skipped", "standard_out", "standard_error"
+        showStandardStreams = true
+    }
+
+    systemProperty 'arg1', 'jdbc:mysql://localhost:3306/sms'
+    systemProperty 'arg2', 'root'
+    systemProperty 'arg3', 'root'
+}

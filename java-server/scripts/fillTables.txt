@@ -1,0 +1,46 @@
+-- Insert sample data into RECORD_LABEL
+INSERT INTO RECORD_LABEL (LabelID, Name, Address, PhoneNumber) VALUES
+    (1, 'Sony Music', '123 Music Lane', '555-1234'),
+    (2, 'Universal Music', '456 Melody Blvd', '555-5678');
+-- Insert sample data into ARTIST
+INSERT INTO ARTIST (ArtistID, Name, LabelID) VALUES
+    (1, 'Taylor Swift', 1),
+    (2, 'Ed Sheeran', 2),
+    (3, 'Ariana Grande', 1);
+-- Insert sample data into PRODUCER
+INSERT INTO PRODUCER (ProducerID, Name) VALUES
+    (1, 'Max Martin'),
+    (2, 'Rick Rubin');
+-- Insert sample data into GENRE
+INSERT INTO GENRE (GenreID, Name) VALUES
+    (1, 'Pop'),
+    (2, 'Rock'),
+    (3, 'Hip-Hop');
+-- Insert sample data into ALBUM
+INSERT INTO ALBUM (AlbumID, Name, LabelID, ProducerID) VALUES
+    (1, '1989', 1, 1),
+    (2, 'Divide', 2, 2),
+    (3, 'Sweetener', 1, 1);
+-- Insert sample data into SONG
+INSERT INTO SONG (SongID, Name, TrackLength, AlbumID, GenreID, ProducerID) VALUES
+    (1, 'Blank Space', 231, 1, 1, 1),
+    (2, 'Shape of You', 233, 2, 1, 2),
+    (3, 'No Tears Left to Cry', 205, 3, 1, 1),
+    (4, 'Castle on the Hill', 261, 2, 2, 2),
+    (5, 'God Is a Woman', 197, 3, 1, 1);
+-- Insert sample data into CREATED
+INSERT INTO CREATED (ArtistID, SongID) VALUES
+    (1, 1),
+    (2, 2),
+    (2, 4),
+    (3, 3),
+    (3, 5);
+-- Insert sample data into MADE
+INSERT INTO MADE (ArtistID, AlbumID) VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3);
+-- Insert sample data into WORKS_FOR
+INSERT INTO WORKS_FOR (ProducerID, LabelID) VALUES
+    (1, 1),
+    (2, 2);
